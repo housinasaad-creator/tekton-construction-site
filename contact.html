@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact | TEKTON · تكتون</title>
+<meta name="description" content="TEKTON · تكتون — start your project: a rough-quantities estimator and a quote request that opens WhatsApp. A concept demo.">
+<meta name="theme-color" content="#0e1012">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website"><meta property="og:title" content="Contact | TEKTON · تكتون"><meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/contact.css">
+<noscript><style>.pour{display:none!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body data-page="contact">
+<div class="pour" id="pour" aria-hidden="true"></div>
+<div id="hdr"></div>
+
+<main>
+<section class="phead">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="ct.k"></div>
+    <h1 class="reveal d1" data-i18n="ct.t"></h1>
+    <p class="lead reveal d2" data-i18n="ct.p"></p>
+  </div>
+</section>
+
+<section class="sec cform">
+  <div class="wrap cgrid">
+    <!-- estimator -->
+    <div class="est reveal" id="estimator">
+      <div class="eyebrow" data-i18n="es.k"></div>
+      <h2 data-i18n="es.t"></h2>
+      <div class="esvg" id="esvg" aria-hidden="true"></div>
+      <div class="fld"><label for="eType" data-i18n="f.type"></label>
+        <select id="eType"><option value="villa" data-i18n="ty.villa"></option><option value="apt" data-i18n="ty.apt" selected></option><option value="com" data-i18n="ty.com"></option><option value="ind" data-i18n="ty.ind"></option><option value="pub" data-i18n="ty.pub"></option></select></div>
+      <div class="fld"><label for="eArea"><span data-i18n="f.area"></span> <b class="num" id="eAreaOut">6,000 m²</b></label>
+        <input type="range" id="eArea" min="100" max="30000" step="100" value="6000"></div>
+      <div class="fld"><label for="eFloors"><span data-i18n="f.floors"></span> <b class="num" id="eFloorsOut">8</b></label>
+        <input type="range" id="eFloors" min="1" max="30" step="1" value="8"></div>
+      <div class="fld"><label data-i18n="f.finish"></label>
+        <div class="seg three" id="eFinish"><button type="button" data-f="0"><b data-i18n="fn.basic"></b></button><button type="button" data-f="1" class="on"><b data-i18n="fn.std"></b></button><button type="button" data-f="2"><b data-i18n="fn.prem"></b></button></div></div>
+      <div class="eout">
+        <div><span data-i18n="eo.conc"></span><b class="num"><span id="oConc">0</span> <small>m³</small></b></div>
+        <div><span data-i18n="eo.steel"></span><b class="num"><span id="oSteel">0</span> <small>t</small></b></div>
+        <div><span data-i18n="eo.dur"></span><b class="num"><span id="oDur">0</span> <small data-i18n="eo.mo"></small></b></div>
+        <div><span data-i18n="eo.foot"></span><b class="num"><span id="oFoot">0</span> <small>m</small></b></div>
+      </div>
+      <div class="fld"><label for="ePrice" data-i18n="f.price"></label><input type="number" id="ePrice" inputmode="numeric" min="0" step="100" data-i18n-ph="f.price.ph"></div>
+      <div class="ebudget" id="eBudget"></div>
+      <p class="fine" data-i18n="es.note"></p>
+    </div>
+
+    <!-- quote form -->
+    <form class="qform reveal d1" id="quoteForm" novalidate>
+      <div class="eyebrow" data-i18n="qf.k"></div>
+      <h2 data-i18n="qf.t"></h2>
+      <div class="two">
+        <div class="fld"><label for="qName" data-i18n="f.name"></label><input id="qName" name="name" autocomplete="name"></div>
+        <div class="fld"><label for="qPhone" data-i18n="f.phone"></label><input id="qPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="qType" data-i18n="f.type"></label><select id="qType" name="type"><option value="" data-i18n="f.any"></option><option value="villa" data-i18n="ty.villa"></option><option value="apt" data-i18n="ty.apt"></option><option value="com" data-i18n="ty.com"></option><option value="ind" data-i18n="ty.ind"></option><option value="pub" data-i18n="ty.pub"></option><option value="ren" data-i18n="ty.ren"></option></select></div>
+        <div class="fld"><label for="qCity" data-i18n="f.city"></label><input id="qCity" name="city" autocomplete="address-level2"></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="qArea" data-i18n="f.area2"></label><input id="qArea" name="area" inputmode="numeric"></div>
+        <div class="fld"><label for="qWhen" data-i18n="f.when"></label><select id="qWhen" name="when"><option value="" data-i18n="f.any"></option><option value="now" data-i18n="wh.now"></option><option value="3" data-i18n="wh.3"></option><option value="6" data-i18n="wh.6"></option><option value="ex" data-i18n="wh.ex"></option></select></div>
+      </div>
+      <div class="fld"><label for="qMsg" data-i18n="f.msg"></label><textarea id="qMsg" name="msg" rows="4"></textarea></div>
+      <label class="chk"><input type="checkbox" id="qUse" checked> <span data-i18n="qf.use"></span></label>
+      <button class="btn solid wide" type="submit"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.4 1 2.9.8 3.4.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg><span data-i18n="qf.send"></span></button>
+      <p class="fine" data-i18n="qf.note"></p>
+    </form>
+  </div>
+</section>
+
+<section class="sec cinfo">
+  <div class="wrap igrid">
+    <div class="reveal d1"><h3 data-i18n="ci.reach"></h3>
+      <ul class="clist" id="cinfo"></ul></div>
+    <div class="reveal d2"><h3 data-i18n="ci.next"></h3>
+      <ol class="nsteps"><li><b>01</b><span data-i18n="ci.n1"></span></li><li><b>02</b><span data-i18n="ci.n2"></span></li><li><b>03</b><span data-i18n="ci.n3"></span></li></ol></div>
+  </div>
+</section>
+</main>
+
+<div id="ftr"></div>
+<script type="module" src="js/contact.js"></script>
+</body>
+</html>

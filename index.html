@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TEKTON · تكتون | Built to last</title>
+<meta name="description" content="TEKTON · تكتون · Tekton Yapı — a concept demo for a construction company: scroll from a drawn plan to a lit building. Arabic / Türkçe / English.">
+<meta name="theme-color" content="#0e1012">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website"><meta property="og:title" content="TEKTON · تكتون — Built to last"><meta property="og:description" content="Scroll from a drawn plan to a lit building. A concept demo for a construction company.">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>.pour{display:none!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
+</head>
+<body data-page="home" data-sound="1" data-needs-gl>
+<div class="pour" id="pour" aria-hidden="true"></div>
+<div id="hdr"></div>
+
+<main>
+<section class="journey" id="journey" aria-label="Scroll story">
+  <div class="stage">
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="shade"></div>
+    <button class="skipj" id="skipj" type="button"><span data-i18n="j.skip"></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
+
+    <div class="ch on" data-ch="0"><div class="k" data-i18n="j.c1.k"></div><h1 data-i18n="j.c1.t"></h1><p data-i18n="j.c1.p"></p></div>
+    <div class="ch" data-ch="1"><div class="k" data-i18n="j.c2.k"></div><h2 data-i18n="j.c2.t"></h2><p data-i18n="j.c2.p"></p></div>
+    <div class="ch" data-ch="2"><div class="k" data-i18n="j.c3.k"></div><h2 data-i18n="j.c3.t"></h2><p data-i18n="j.c3.p"></p></div>
+    <div class="ch" data-ch="3"><div class="k" data-i18n="j.c4.k"></div><h2 data-i18n="j.c4.t"></h2><p data-i18n="j.c4.p"></p></div>
+    <div class="ch" data-ch="4"><div class="k" data-i18n="j.c5.k"></div><h2 data-i18n="j.c5.t"></h2><p data-i18n="j.c5.p"></p></div>
+
+    <!-- 1 · plan readout -->
+    <div class="hud hud-plan" id="hudPlan" aria-hidden="true">
+      <div class="row"><span data-i18n="h.plan"></span><span>1 : 200</span></div>
+      <pre class="pen" id="penv">X   0.00   Z   0.00</pre>
+      <div class="row small"><span data-i18n="h.pen"></span><span id="penpct">0%</span></div>
+      <div class="bar thin"><i id="penbar"></i></div>
+    </div>
+
+    <!-- 2 · level counter -->
+    <div class="hud hud-rise" id="hudRise" aria-hidden="true">
+      <div class="row"><span data-i18n="h.level"></span><span data-i18n="h.height"></span></div>
+      <div class="big"><b id="lvlv">00</b><small>/ 09</small><span class="hv"><b id="hgtv">0.0</b> m</span></div>
+      <div class="floors" id="floors"></div>
+    </div>
+
+    <!-- 3 · cure strip -->
+    <div class="hud hud-cure" id="hudCure" aria-hidden="true">
+      <div class="row"><span data-i18n="h.day"></span><span data-i18n="h.strength"></span></div>
+      <div class="big"><b id="dayv">00</b><small>/ 28</small><span class="hv"><b id="mpav">0.0</b> MPa</span></div>
+      <div class="bar cure"><i id="curebar"></i><u class="m7"><s data-i18n="h.t7"></s></u><u class="m28"><s data-i18n="h.t28"></s></u></div>
+      <div class="tests"><span id="t7" class="tst"></span><span id="t28" class="tst"></span></div>
+    </div>
+
+    <!-- 4 · x-ray legend (clickable) -->
+    <div class="hud hud-xray" id="hudXray">
+      <div class="row"><span data-i18n="h.layers"></span><span data-i18n="h.toggle"></span></div>
+      <div class="chips" id="chips">
+        <button type="button" data-sys="struct" class="on" aria-pressed="true"><i style="--c:#ff6b1f"></i><span data-i18n="h.s.struct"></span></button>
+        <button type="button" data-sys="water" class="on" aria-pressed="true"><i style="--c:#2f9cff"></i><span data-i18n="h.s.water"></span></button>
+        <button type="button" data-sys="fire" class="on" aria-pressed="true"><i style="--c:#ff3b30"></i><span data-i18n="h.s.fire"></span></button>
+        <button type="button" data-sys="power" class="on" aria-pressed="true"><i style="--c:#ffd23f"></i><span data-i18n="h.s.power"></span></button>
+        <button type="button" data-sys="hvac" class="on" aria-pressed="true"><i style="--c:#b4bdc5"></i><span data-i18n="h.s.hvac"></span></button>
+      </div>
+    </div>
+
+    <!-- 5 · the key -->
+    <div class="keyp" id="keyp">
+      <button class="keybtn" id="keyBtn" type="button" aria-label="Turn the key">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="32" r="11"/><circle cx="20" cy="32" r="4"/><path d="M31 32h27M50 32v9M42 32v6"/></svg>
+      </button>
+      <div class="kt"><b data-i18n="j.key.t"></b><span data-i18n="j.key.p"></span></div>
+      <div class="kdone"><span data-i18n="j.key.done"></span><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" href="projects.html" data-i18n="btn.projects"></a></div>
+    </div>
+
+    <div class="dots" id="dots" role="tablist"></div>
+    <div class="scrollhint" id="shint"><i></i><span data-i18n="j.scroll"></span></div>
+  </div>
+</section>
+
+<!-- promises -->
+<section class="sec promise" id="promise">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="p.k"></div>
+    <h2 class="h2 reveal d1" data-i18n="p.t"></h2>
+    <div class="pgrid">
+      <article class="pcard reveal d1"><span class="no">01</span><svg class="pic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 52h48M14 52V20M50 52V20M14 20h36M22 20v-8h20v8M22 36h20M22 44h20"/></svg><h3 data-i18n="p.1.t"></h3><p data-i18n="p.1.p"></p></article>
+      <article class="pcard reveal d2"><span class="no">02</span><svg class="pic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 6l22 8v16c0 14-9 24-22 28C19 54 10 44 10 30V14z"/><path d="M22 32l7 7 13-14"/></svg><h3 data-i18n="p.2.t"></h3><p data-i18n="p.2.p"></p></article>
+      <article class="pcard reveal d3"><span class="no">03</span><svg class="pic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="34" r="22"/><path d="M32 34V18M32 34l12 6M26 8h12"/></svg><h3 data-i18n="p.3.t"></h3><p data-i18n="p.3.p"></p></article>
+    </div>
+  </div>
+</section>
+
+<!-- featured projects -->
+<section class="sec featured" id="featured">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="pr.k"></div>
+    <h2 class="h2 reveal d1" data-i18n="pr.t"></h2>
+    <div class="fgrid3" id="featGrid"></div>
+    <div class="reveal"><a class="btn line" href="projects.html"><span data-i18n="btn.projects"></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </div>
+</section>
+
+<!-- lab teaser -->
+<section class="sec labt" id="labt">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="l.k"></div>
+    <h2 class="h2 reveal d1" data-i18n="l.t"></h2>
+    <div class="lgrid">
+      <a class="lcard reveal d1" href="lab.html#cure">
+        <svg class="lic" viewBox="0 0 220 110" fill="none"><path d="M10 100H210M10 100V8" stroke="rgba(239,236,228,.3)"/><path class="draw" d="M10 98C40 40 70 24 110 18S190 12 210 11" stroke="#ff6b1f" stroke-width="2.4"/><circle cx="64" cy="32" r="4" fill="#ff6b1f"/><circle cx="210" cy="11" r="4" fill="#ff6b1f"/></svg>
+        <h3 data-i18n="l.1.t"></h3><p data-i18n="l.1.p"></p><span class="go"><span data-i18n="btn.more"></span> &rarr;</span>
+      </a>
+      <a class="lcard reveal d2" href="lab.html#shake">
+        <svg class="lic shk" viewBox="0 0 220 110" fill="none"><path d="M10 100H210" stroke="rgba(239,236,228,.3)"/><g class="bld" stroke="#efece4" stroke-width="2"><path d="M80 100V30h60v70M80 50h60M80 70h60M100 30V100M120 30V100"/><path d="M96 30V16h28v14" stroke="#ff6b1f"/></g><path d="M40 108q10-6 20 0t20 0M140 108q10-6 20 0t20 0" stroke="#ff6b1f" stroke-width="1.6"/></svg>
+        <h3 data-i18n="l.2.t"></h3><p data-i18n="l.2.p"></p><span class="go"><span data-i18n="btn.more"></span> &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- process -->
+<section class="sec process" id="process">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="pc.k"></div>
+    <h2 class="h2 reveal d1" data-i18n="pc.t"></h2>
+    <ol class="steps">
+      <li class="reveal d1"><b>01</b><h3 data-i18n="pc.1.t"></h3><p data-i18n="pc.1.p"></p></li>
+      <li class="reveal d2"><b>02</b><h3 data-i18n="pc.2.t"></h3><p data-i18n="pc.2.p"></p></li>
+      <li class="reveal d3"><b>03</b><h3 data-i18n="pc.3.t"></h3><p data-i18n="pc.3.p"></p></li>
+      <li class="reveal d4"><b>04</b><h3 data-i18n="pc.4.t"></h3><p data-i18n="pc.4.p"></p></li>
+      <li class="reveal d5"><b>05</b><h3 data-i18n="pc.5.t"></h3><p data-i18n="pc.5.p"></p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- call to action -->
+<section class="sec cta" id="cta">
+  <div class="wrap">
+    <div class="hazard" aria-hidden="true"></div>
+    <h2 class="h2 reveal" data-i18n="cta.t"></h2>
+    <p class="lead reveal d1" data-i18n="cta.p"></p>
+    <div class="reveal d2 ctas"><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" id="ctaWa" href="#" target="_blank" rel="noopener" data-i18n="btn.wa"></a></div>
+  </div>
+</section>
+</main>
+
+<div id="ftr"></div>
+<script type="module" src="js/home.js"></script>
+</body>
+</html>

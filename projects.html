@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projects | TEKTON · تكتون</title>
+<meta name="description" content="TEKTON · تكتون — the model table: eight projects as maquettes. Filter by type, tap a model to fly to it. A concept demo.">
+<meta name="theme-color" content="#0e1012">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website"><meta property="og:title" content="Projects | TEKTON · تكتون"><meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/pages.css">
+<noscript><style>.pour{display:none!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
+</head>
+<body data-page="projects" data-needs-gl>
+<div class="pour" id="pour" aria-hidden="true"></div>
+<div id="hdr"></div>
+
+<main>
+<section class="pj" id="pj">
+  <div class="stage">
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="shade"></div>
+    <div class="pj-title" id="pjTitle">
+      <div class="eyebrow" data-i18n="pj.k"></div>
+      <h1 data-i18n="pj.t"></h1>
+      <p data-i18n="pj.p"></p>
+    </div>
+    <div class="labels" id="labels"></div>
+    <div class="pj-ui" id="pjUi">
+      <div class="chips2" id="filters" role="tablist"></div>
+      <div class="pj-hint"><span data-i18n="pj.hint"></span></div>
+    </div>
+    <aside class="info" id="info" aria-live="polite">
+      <button class="x" id="infoX" type="button" aria-label="Close">&times;</button>
+      <div class="tag" id="iTag"></div>
+      <h2 id="iName"></h2>
+      <p id="iBlurb"></p>
+      <dl class="spec">
+        <div><dt data-i18n="s.city"></dt><dd id="iCity"></dd></div>
+        <div><dt data-i18n="s.year"></dt><dd id="iYear" class="num"></dd></div>
+        <div><dt id="iAreaK"></dt><dd id="iArea" class="num"></dd></div>
+        <div><dt data-i18n="s.floors"></dt><dd id="iFloors" class="num"></dd></div>
+      </dl>
+      <div class="status"><span id="iStatus"></span><i><b id="iBar"></b></i></div>
+      <div class="infobtns"><a class="btn solid" id="iAsk" href="#" target="_blank" rel="noopener" data-i18n="pj.ask"></a><button class="btn line" id="iBack" type="button" data-i18n="pj.back"></button></div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec pj-list" id="all">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="pj.lk"></div>
+    <h2 class="h2 reveal d1" data-i18n="pj.lt"></h2>
+    <div class="fgrid3 plist" id="plist"></div>
+  </div>
+</section>
+
+<section class="sec stats">
+  <div class="wrap">
+    <div class="sgrid">
+      <div class="reveal d1"><b class="num" data-count="126">0</b><span data-i18n="st.1"></span></div>
+      <div class="reveal d2"><b class="num" data-count="1.8" data-dec="1" data-suffix="M">0</b><span data-i18n="st.2"></span></div>
+      <div class="reveal d3"><b class="num" data-count="14">0</b><span data-i18n="st.3"></span></div>
+      <div class="reveal d4"><b class="num" data-count="17">0</b><span data-i18n="st.4"></span></div>
+    </div>
+    <p class="fine reveal" data-i18n="st.note"></p>
+  </div>
+</section>
+
+<section class="sec cta" id="cta">
+  <div class="wrap">
+    <div class="hazard" aria-hidden="true"></div>
+    <h2 class="h2 reveal" data-i18n="cta.t"></h2>
+    <p class="lead reveal d1" data-i18n="cta.p"></p>
+    <div class="reveal d2 ctas"><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" id="ctaWa" href="#" target="_blank" rel="noopener" data-i18n="btn.wa"></a></div>
+  </div>
+</section>
+</main>
+
+<div id="ftr"></div>
+<script type="module" src="js/projects.js"></script>
+</body>
+</html>

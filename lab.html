@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Site Lab | TEKTON · تكتون</title>
+<meta name="description" content="TEKTON · تكتون — Site Lab: cure a concrete cylinder and crush it, then shake a five-storey frame with and without base isolation. Simplified teaching models. A concept demo.">
+<meta name="theme-color" content="#0e1012">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website"><meta property="og:title" content="Site Lab | TEKTON · تكتون"><meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/lab.css">
+<noscript><style>.pour{display:none!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
+</head>
+<body data-page="lab" data-needs-gl>
+<div class="pour" id="pour" aria-hidden="true"></div>
+<div id="hdr"></div>
+
+<main>
+<section class="phead">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="lb.k"></div>
+    <h1 class="reveal d1" data-i18n="lb.t"></h1>
+    <p class="lead reveal d2" data-i18n="lb.p"></p>
+    <p class="fine reveal d3" data-i18n="lb.note"></p>
+  </div>
+</section>
+
+<!-- 1 · cure & crush -->
+<section class="sec lab" id="cure">
+  <div class="wrap lab-grid">
+    <div class="lab-view reveal">
+      <canvas id="cureGl" aria-hidden="true"></canvas>
+      <div class="cap num" id="cureCap"></div>
+    </div>
+    <div class="lab-ctl">
+      <div class="eyebrow reveal" data-i18n="cu.k"></div>
+      <h2 class="h2 reveal d1" data-i18n="cu.t"></h2>
+      <p class="lead reveal d2" data-i18n="cu.p"></p>
+
+      <div class="ctl reveal"><span class="lbl" data-i18n="cu.mix"></span><div class="seg" id="mixSeg" role="radiogroup">
+        <button type="button" data-mix="c25" role="radio"><b>C25</b><small data-i18n="cu.mix.std"></small></button>
+        <button type="button" data-mix="c30" role="radio" class="on"><b>C30</b><small data-i18n="cu.mix.std"></small></button>
+        <button type="button" data-mix="c30r" role="radio"><b>C30</b><small data-i18n="cu.mix.rapid"></small></button>
+        <button type="button" data-mix="c35" role="radio"><b>C35</b><small data-i18n="cu.mix.high"></small></button>
+      </div></div>
+      <div class="ctl reveal"><span class="lbl" data-i18n="cu.cur"></span><div class="seg" id="curSeg" role="radiogroup">
+        <button type="button" data-cur="wet" role="radio" class="on"><b data-i18n="cu.cur.wet"></b></button>
+        <button type="button" data-cur="air" role="radio"><b data-i18n="cu.cur.air"></b></button>
+        <button type="button" data-cur="cold" role="radio"><b data-i18n="cu.cur.cold"></b></button>
+        <button type="button" data-cur="hot" role="radio"><b data-i18n="cu.cur.hot"></b></button>
+      </div></div>
+
+      <div class="ctl reveal"><span class="lbl"><span data-i18n="cu.age"></span> <b class="num" id="dayOut">28</b></span>
+        <div class="slider"><input type="range" id="day" min="0" max="28" step="0.1" value="28" aria-label="Age in days"><div class="ticks"><i>0</i><i>7</i><i>14</i><i>21</i><i>28</i></div></div>
+        <div class="btnrow"><button class="btn line" id="playBtn" type="button" data-i18n="cu.play"></button></div>
+      </div>
+
+      <div class="read reveal">
+        <div><span data-i18n="cu.r.est"></span><b class="num"><span id="rMpa">0</span> <small>MPa</small></b></div>
+        <div><span data-i18n="cu.r.pct"></span><b class="num"><span id="rPct">0</span><small>%</small></b></div>
+        <div><span data-i18n="cu.r.tgt"></span><b class="num"><span id="rTgt">30</span> <small>MPa</small></b></div>
+      </div>
+      <canvas id="cureChart" class="chart reveal" width="640" height="240" aria-label="Strength curve"></canvas>
+
+      <div class="btnrow reveal"><button class="btn solid" id="runBtn" type="button" data-i18n="cu.run"></button><button class="btn line" id="resetBtn" type="button" data-i18n="cu.reset"></button></div>
+      <div class="result" id="cureRes" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · shake table -->
+<section class="sec lab alt" id="shake">
+  <div class="wrap lab-grid rev">
+    <div class="lab-ctl">
+      <div class="eyebrow reveal" data-i18n="sh.k"></div>
+      <h2 class="h2 reveal d1" data-i18n="sh.t"></h2>
+      <p class="lead reveal d2" data-i18n="sh.p"></p>
+
+      <div class="ctl reveal"><span class="lbl" data-i18n="sh.base"></span><div class="seg two" id="isoSeg" role="radiogroup">
+        <button type="button" data-iso="0" role="radio"><b data-i18n="sh.fixed"></b><small data-i18n="sh.fixed.s"></small></button>
+        <button type="button" data-iso="1" role="radio" class="on"><b data-i18n="sh.isol"></b><small data-i18n="sh.isol.s"></small></button>
+      </div></div>
+      <div class="ctl reveal"><span class="lbl"><span data-i18n="sh.pga"></span> <b class="num" id="pgaOut">0.35 g</b></span>
+        <div class="seg three" id="pgaSeg"><button type="button" data-pga="0.15"><b data-i18n="sh.mod"></b><small class="num">0.15 g</small></button><button type="button" data-pga="0.35" class="on"><b data-i18n="sh.str"></b><small class="num">0.35 g</small></button><button type="button" data-pga="0.55"><b data-i18n="sh.sev"></b><small class="num">0.55 g</small></button></div>
+        <div class="slider"><input type="range" id="pga" min="0.05" max="0.6" step="0.01" value="0.35" aria-label="Peak ground acceleration"></div>
+      </div>
+
+      <div class="gauge reveal">
+        <div class="grow"><span data-i18n="sh.drift"></span><b class="num"><span id="gDrift">0.00</span><small>%</small></b></div>
+        <div class="gbar"><i id="gFill"></i><u class="m1"><s>1%</s></u><u class="m2"><s>2%</s></u></div>
+        <div class="grow sub"><span data-i18n="sh.stroke"></span><b class="num"><span id="gStroke">0</span> <small>cm</small></b></div>
+      </div>
+      <canvas id="shakeChart" class="chart reveal" width="640" height="200" aria-label="Quake record"></canvas>
+      <div class="btnrow reveal"><button class="btn solid" id="quakeBtn" type="button" data-i18n="sh.go"></button><button class="btn line" id="quakeReset" type="button" data-i18n="sh.reset"></button></div>
+      <div class="result" id="shakeRes" aria-live="polite"></div>
+    </div>
+    <div class="lab-view reveal">
+      <canvas id="shakeGl" aria-hidden="true"></canvas>
+      <div class="cap num" id="shakeCap"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec cta" id="cta">
+  <div class="wrap">
+    <div class="hazard" aria-hidden="true"></div>
+    <h2 class="h2 reveal" data-i18n="cta.t"></h2>
+    <p class="lead reveal d1" data-i18n="cta.p"></p>
+    <div class="reveal d2 ctas"><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" id="ctaWa" href="#" target="_blank" rel="noopener" data-i18n="btn.wa"></a></div>
+  </div>
+</section>
+</main>
+
+<div id="ftr"></div>
+<script type="module" src="js/lab.js"></script>
+</body>
+</html>

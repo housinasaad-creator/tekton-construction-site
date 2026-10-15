@@ -1,0 +1,32 @@
+import { add } from '../i18n.js';
+
+add({
+  'title.projects': { ar: 'مشاريعنا | تكتون', tr: 'Projeler | Tekton Yapı', en: 'Projects | TEKTON' },
+  'pj.k': { ar: 'مشاريعنا', tr: 'Projelerimiz', en: 'Projects' },
+  'pj.t': { ar: 'طاولة المجسّمات.', tr: 'Maket masası.', en: 'The model table.' },
+  'pj.p': { ar: 'ثمانية مشاريع من مكتبنا كمجسّمات. أدِر الطاولة، صفِّ حسب النوع، والمس مجسّماً لتطير الكاميرا إليه.', tr: 'Masamızdan sekiz proje, maket olarak. Masayı çevirin, türe göre süzün, bir makete dokunun; kamera ona uçsun.', en: 'Eight projects from our desk, as maquettes. Turn the table, filter by type, tap a model and the camera flies to it.' },
+  'pj.hint': { ar: 'اسحب للتدوير · المس مجسّماً', tr: 'Döndürmek için sürükleyin · bir makete dokunun', en: 'Drag to rotate · tap a model' },
+  'pj.ask': { ar: 'اسأل عن مشروع مشابه', tr: 'Benzer bir proje sorun', en: 'Ask about a similar project' },
+  'pj.back': { ar: 'عودة إلى الطاولة', tr: 'Masaya dön', en: 'Back to the table' },
+  'pj.lk': { ar: 'القائمة الكاملة', tr: 'Tüm liste', en: 'The full list' },
+  'pj.lt': { ar: 'كل المشاريع.', tr: 'Tüm projeler.', en: 'All projects.' },
+  'pj.wa': { ar: 'مرحباً تكتون، أودّ الاستفسار عن مشروع مشابه لـ', tr: 'Merhaba Tekton, şuna benzer bir proje hakkında bilgi almak istiyorum:', en: 'Hello Tekton, I would like to ask about a project similar to' },
+  'f.all': { ar: 'الكل', tr: 'Tümü', en: 'All' },
+  'f.residential': { ar: 'سكني', tr: 'Konut', en: 'Residential' },
+  'f.commercial': { ar: 'تجاري', tr: 'Ticari', en: 'Commercial' },
+  'f.infra': { ar: 'بنية تحتية', tr: 'Altyapı', en: 'Infrastructure' },
+  'f.public': { ar: 'مرافق عامة', tr: 'Kamu', en: 'Public' },
+  'f.industrial': { ar: 'صناعي', tr: 'Endüstriyel', en: 'Industrial' },
+  's.city': { ar: 'المدينة', tr: 'Şehir', en: 'City' },
+  's.year': { ar: 'السنة', tr: 'Yıl', en: 'Year' },
+  's.area': { ar: 'المساحة', tr: 'Alan', en: 'Area' },
+  's.length': { ar: 'الطول', tr: 'Uzunluk', en: 'Length' },
+  's.floors': { ar: 'الطوابق', tr: 'Kat', en: 'Floors' },
+  'st.done': { ar: 'تم التسليم', tr: 'Teslim edildi', en: 'Delivered' },
+  'st.build': { ar: 'قيد التنفيذ', tr: 'Yapım aşamasında', en: 'Under construction' },
+  'st.1': { ar: 'مشروعاً مُسلَّماً', tr: 'teslim edilen proje', en: 'projects delivered' },
+  'st.2': { ar: 'متر مربع مبني', tr: 'm² inşa edildi', en: 'm² built' },
+  'st.3': { ar: 'مدينة', tr: 'şehir', en: 'cities' },
+  'st.4': { ar: 'عاماً من الخبرة', tr: 'yıllık deneyim', en: 'years of practice' },
+  'st.note': { ar: 'أرقام تمثيلية لعرض التصميم فقط.', tr: 'Rakamlar yalnızca tasarım örneği için temsilidir.', en: 'Illustrative figures for the design demo only.' }
+});
