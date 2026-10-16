@@ -10,7 +10,7 @@ add({
   'ab.sign.s': { ar: 'الهدف: صفر. دائماً.', tr: 'Hedef: sıfır. Her zaman.', en: 'Target: zero. Always.' },
   'ab.sign.h': { ar: 'اللوحة عند البوابة.', tr: 'Kapıdaki pano.', en: 'The board at the gate.' },
   'ab.sign.p': { ar: 'عند كل بوابة موقع لوحة بهذا الشكل، يقلبها العمّال بأيديهم. نحرص أن يعود الرقم إلى الصفر أقل ما يمكن، وأن نقول الحقيقة حين يعود.', tr: 'Her şantiye kapısında böyle bir pano durur ve çalışanlar rakamı elleriyle çevirir. Sayının sıfırlanmasını en aza indirmeye, sıfırlandığında da doğruyu söylemeye çalışırız.', en: 'Every site gate has a board like this, and the crew flips the number by hand. We work to make it reset as rarely as possible, and to say so honestly when it does.' },
-  'ab.sign.n': { ar: 'الرقم تمثيلي للعرض فقط.', tr: 'Rakam yalnızca gösterim içindir.', en: 'The figure is illustrative, for the demo only.' },
+  'ab.sign.n': { ar: 'الرقم مؤقت إلى حين اكتمال الموقع.', tr: 'Rakam, site tamamlanana kadar geçicidir.', en: 'The figure is a placeholder until the site is complete.' },
 
   'tl.k': { ar: 'مسيرتنا', tr: 'Yolculuğumuz', en: 'Our timeline' },
   'tl.t': { ar: 'سبعة عشر عاماً على الخطّ.', tr: 'Hatta on yedi yıl.', en: 'Seventeen years on the line.' },
@@ -33,7 +33,7 @@ add({
   'nb.2': { ar: 'مهندساً', tr: 'mühendis', en: 'engineers' },
   'nb.3': { ar: 'موقعاً يعمل الآن', tr: 'aktif şantiye', en: 'sites running now' },
   'nb.4': { ar: 'عاماً من الخبرة', tr: 'yıllık deneyim', en: 'years of practice' },
-  'st.note': { ar: 'أرقام تمثيلية لعرض التصميم فقط.', tr: 'Rakamlar yalnızca tasarım örneği için temsilidir.', en: 'Illustrative figures for the design demo only.' },
+  'st.note': { ar: 'أرقام مؤقتة إلى حين اكتمال الموقع.', tr: 'Rakamlar site tamamlanana kadar geçicidir.', en: 'Placeholder figures until the site is complete.' },
 
   'tm.k': { ar: 'من يعمل عندنا', tr: 'Kimler çalışıyor', en: 'Who does what' },
   'tm.t': { ar: 'ستة أدوار، ومسؤول واحد لكل منها.', tr: 'Altı rol, her birinin tek sorumlusu.', en: 'Six roles, one owner for each.' },
@@ -46,5 +46,5 @@ add({
 
   'sd.k': { ar: 'المعايير', tr: 'Standartlar', en: 'Standards' },
   'sd.t': { ar: 'نعمل وفق هذه المراجع.', tr: 'Şu referanslara göre çalışırız.', en: 'The references we work to.' },
-  'sd.n': { ar: 'مراجع عمل وليست شهادات ممنوحة لنا. هذا عرض لعلامة مخترعة.', tr: 'Çalışma referanslarıdır, bize verilmiş belge değildir. Bu, kurgusal bir markanın örneğidir.', en: 'Working references, not certificates awarded to us. This is a demo for a fictional brand.' }
+  'sd.n': { ar: 'مراجع عمل وليست شهادات ممنوحة لنا.', tr: 'Çalışma referanslarıdır, bize verilmiş belge değildir.', en: 'Working references, not certificates awarded to us.' }
 });

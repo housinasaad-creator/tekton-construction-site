@@ -28,5 +28,5 @@ add({
   'st.2': { ar: 'متر مربع مبني', tr: 'm² inşa edildi', en: 'm² built' },
   'st.3': { ar: 'مدينة', tr: 'şehir', en: 'cities' },
   'st.4': { ar: 'عاماً من الخبرة', tr: 'yıllık deneyim', en: 'years of practice' },
-  'st.note': { ar: 'أرقام تمثيلية لعرض التصميم فقط.', tr: 'Rakamlar yalnızca tasarım örneği için temsilidir.', en: 'Illustrative figures for the design demo only.' }
+  'st.note': { ar: 'أرقام مؤقتة إلى حين اكتمال الموقع.', tr: 'Rakamlar site tamamlanana kadar geçicidir.', en: 'Placeholder figures until the site is complete.' }
 });

@@ -1,12 +1,12 @@
 /*
-  Brand identity in one place. To re-skin this demo for a real client, edit this file (name, number, colors).
-  "TEKTON / تكتون / Tekton Yapı" is an invented brand made for this concept demo; it is not tied to any real company.
+  Brand identity in one place: edit this file to change the name, number or colours.
+  "TEKTON / تكتون / Tekton Yapı" is the working brand for this site while it is being built.
 */
 export const BRAND = {
   name: 'TEKTON',
   nameAr: 'تكتون',
   nameTr: 'Tekton Yapı',
-  wa: '905537410520',            // studio demo number; replaced with the real company's number
+  wa: '905537410520',            // placeholder number until the final one is set
   email: 'hello@tekton.example',
   city: { ar: 'غازي عنتاب · تركيا', tr: 'Gaziantep · Türkiye', en: 'Gaziantep · Türkiye' },
   orange: '#ff6b1f',

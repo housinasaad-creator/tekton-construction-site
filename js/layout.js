@@ -57,7 +57,7 @@ function buildChrome() {
         <li><a href="${waLink('')}" target="_blank" rel="noopener">WhatsApp</a></li>
         <li data-i18n="f.hours"></li><li data-i18n="f.addr"></li></ul></div>
     </div>
-    <div class="fbar"><span>© ${BRAND.year} ${BRAND.name} — demo</span><span><span data-i18n="f.by"></span> <a href="https://housinasaad-creator.github.io/mohammed-studio/" target="_blank" rel="noopener">MOHAMMED Web Studio</a></span></div>
+    <div class="fbar"><span>© ${BRAND.year} ${BRAND.name} — <span data-i18n="f.wip"></span></span><span><span data-i18n="f.by"></span> <a href="https://housinasaad-creator.github.io/mohammed-studio/" target="_blank" rel="noopener">MOHAMMED Web Studio</a></span></div>
   </div></footer>
   <a class="wa-float" href="${waLink('')}" target="_blank" rel="noopener" aria-label="WhatsApp">${ICON.wa}</a>`;
 

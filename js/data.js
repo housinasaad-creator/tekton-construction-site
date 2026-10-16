@@ -1,5 +1,5 @@
 /*
-  Fictional portfolio used by the home teaser and the projects model table. Every name, place and figure is illustrative.
+  Placeholder portfolio used by the home teaser and the projects model table while the site is being built. Names, places and figures are placeholders.
   type: residential | commercial | infra | public | industrial        status: done | build
 */
 export const TYPES = ['residential', 'commercial', 'infra', 'public', 'industrial'];

@@ -1,6 +1,6 @@
 # TEKTON · تكتون · Tekton Yapı
 
-A concept demo of a **construction company website** with a scroll-driven 3D story. The brand is invented for this demo; it is not a real company. Arabic / Türkçe / English.
+A **construction company website** with a scroll-driven 3D story. Work in progress: not finished yet, and the names, figures and projects are placeholders until it is. Arabic / Türkçe / English.
 
 **What is on the site**
 
@@ -35,6 +35,6 @@ then open <http://localhost:3600/> (or double-click `run-site.bat` on Windows). 
 
 **Tests** (`tests/`): `test_all.py` loads every page in ar/tr/en on desktop and phone sizes and checks console errors, missing translations, horizontal overflow and that the loader lifts; `shots.py`, `page.py`, `perf.py` are screenshot / draw-call helpers.
 
-**Re-skinning for a real client**: edit `js/brand.js` (name, WhatsApp number, e-mail, colours, logo paths), the text in `js/i18n/*.js`, the portfolio in `js/data.js` and the maquettes in `js/gl/models.js`.
+**Re-skinning**: edit `js/brand.js` (name, WhatsApp number, e-mail, colours, logo paths), the text in `js/i18n/*.js`, the portfolio in `js/data.js` and the maquettes in `js/gl/models.js`.
 
 Design and development: MOHAMMED Web Studio.
