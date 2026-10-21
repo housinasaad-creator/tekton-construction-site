@@ -27,7 +27,10 @@ function renderFeatured() {
 
 function webglOK() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } }
 
-async function startJourney() {
+/* ================= المشهد الثلاثي الأبعاد الحي (محفوظ، لا يُحذف): startJourney3D =================
+   الهيرو الآن فيديو (startJourney أسفله). هذه الدالة كما كانت (Story/WebGL + HUD + المفتاح + أزرار الأشعة) ولا تُستدعى؛
+   لإعادتها: استدعِ startJourney3D() بدل startJourney()، وأعد محتوى <template id="scene3d-archive"> في index.html إلى داخل .stage. */
+async function startJourney3D() {
   const section = $('#journey');
   if (!webglOK() || new URLSearchParams(location.search).has('nogl')) { section.classList.add('nogl'); pageReady(); return; }
   const fontsReady = Promise.race([
@@ -105,4 +108,38 @@ function renderAll() {
 }
 window.addEventListener('langchange', renderAll);
 renderAll();
+
+/* ------------------------------------------------------------ الهيرو كفيديو بأربع تمريرات (انظر js/hero-video.js) */
+async function startJourney() {
+  const section = $('#journey'), stageEl = $('.stage', section), chs = $$('.ch', section), dots = $('#dots'), shint = $('#shint');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (new URLSearchParams(location.search).has('nogl')) { section.classList.add('nogl'); pageReady(); return; }
+  const names = ['j.c1.k', 'j.c2.k', 'j.c3.k', 'j.c4.k', 'j.c5.k'], STG = names.length;
+  dots.innerHTML = names.map((k, i) => `<button type="button" role="tab" aria-label="${i + 1}" data-i="${i}"><span data-i18n="${k}"></span></button>`).join('');
+  $$('span', dots).forEach(sp => { sp.textContent = t(sp.dataset.i18n); });
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  let last = -1;
+  const layout = () => {
+    const total = Math.max(1, section.offsetHeight - stageEl.offsetHeight), p = reduced ? 0 : clamp(-section.getBoundingClientRect().top / total), i = clamp(Math.round(p * (STG - 1)), 0, STG - 1);
+    if (i !== last) { last = i; chs.forEach((el, k) => el.classList.toggle('on', k === i)); $$('button', dots).forEach((b, k) => b.classList.toggle('on', k === i)); stageEl.dataset.ch = i; }
+    shint.style.opacity = p > 0.012 ? 0 : 1;
+  };
+  addEventListener('scroll', layout, { passive: true }); addEventListener('resize', layout, { passive: true }); layout();
+  const { initHeroVideo } = await import('./hero-video.js');
+  const hv = initHeroVideo({
+    hero: section, stick: stageEl, video: $('#hv'), hdr: () => 0, reduced, saveData: !!(navigator.connection && navigator.connection.saveData),
+    stops: [0, 3.6, 7.0, 10.0, 14.4], srcDesktop: 'assets/hero/hero-desktop.mp4', srcPhone: 'assets/hero/hero-phone.mp4', srcDesktopRev: 'assets/hero/hero-desktop-rev.mp4', srcPhoneRev: 'assets/hero/hero-phone-rev.mp4', mobileQuery: '(max-width: 860px)', rate: 2,
+    onFail: () => section.classList.add('nogl')
+  });
+  dots.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) hv.jump(+b.dataset.i); });
+  $('#skipj').addEventListener('click', () => scrollTo({ top: section.getBoundingClientRect().top + scrollY + section.offsetHeight, behavior: 'smooth' }));
+  /* الفيديو يُحمَّل مرة واحدة ويبقى (يتوقف خارج الشاشة فقط)؛ الأجهزة قليلة الذاكرة تُفرِّغه عند الابتعاد */
+  const lowMem = (navigator.deviceMemory || 8) <= 2;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { if (!e.isIntersecting) hv.pause(); }, { rootMargin: '80px' }).observe(section);
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) hv.load(); else if (lowMem) hv.unload(); }, { rootMargin: '250% 0px 250% 0px' }).observe(section);
+  } else hv.load();
+  requestAnimationFrame(() => requestAnimationFrame(() => pageReady()));
+}
 startJourney();
+

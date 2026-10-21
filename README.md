@@ -12,6 +12,9 @@ A **construction company website** with a scroll-driven 3D story. Work in progre
 | `lab.html` | Two small instruments: *Cure & crush* (mix, curing method, age, compression test with a strength curve) and a *shake table* (five-storey frame, base isolation on/off, live simulation). Teaching models, not engineering calculations. |
 | `about.html`, `contact.html` | Site-gate odometer sign, timeline, values; a rough-quantities estimator and a quote form that opens WhatsApp. |
 
+
+**Hero (2026-10-21):** the home hero is now a pre-rendered high-resolution video of the scroll story (desktop 2560x1440, phone 1080x1920) played in four scroll steps; a reversed twin video makes scrolling back smooth. The live three.js story (`js/gl/story.js`, `startJourney3D` in `js/home.js`, the archived canvas/HUD template in `index.html`) is kept in the files, switched off, so the video can be re-rendered or the live scene restored.
+
 **Under the hood**
 
 * three.js r172 (vendored in `js/vendor`), no build step, no frameworks, no CDN. Fonts are vendored too (`assets/fonts`, regenerate with `python tools/get_fonts.py`).
