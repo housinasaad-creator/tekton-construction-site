@@ -15,15 +15,14 @@
 <noscript><style>.pour{display:none!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
 <script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
 </head>
-<body data-page="home" data-needs-gl>
+<body data-page="home" data-sound="1" data-needs-gl>
 <div class="pour" id="pour" aria-hidden="true"></div>
 <div id="hdr"></div>
 
 <main>
 <section class="journey" id="journey" aria-label="Scroll story">
   <div class="stage">
-    <picture class="hv-poster" id="hvPoster"><source media="(max-width: 860px)" srcset="assets/hero/poster-m.webp"><img src="assets/hero/poster.webp" width="1280" height="720" alt="" fetchpriority="high"></picture>
-    <video class="hv" id="hv" muted playsinline preload="none" disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
+    <canvas id="gl" aria-hidden="true"></canvas>
     <div class="shade"></div>
     <button class="skipj" id="skipj" type="button"><span data-i18n="j.skip"></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
 
@@ -32,6 +31,50 @@
     <div class="ch" data-ch="2"><div class="k" data-i18n="j.c3.k"></div><h2 data-i18n="j.c3.t"></h2><p data-i18n="j.c3.p"></p></div>
     <div class="ch" data-ch="3"><div class="k" data-i18n="j.c4.k"></div><h2 data-i18n="j.c4.t"></h2><p data-i18n="j.c4.p"></p></div>
     <div class="ch" data-ch="4"><div class="k" data-i18n="j.c5.k"></div><h2 data-i18n="j.c5.t"></h2><p data-i18n="j.c5.p"></p></div>
+
+    <!-- 1 · plan readout -->
+    <div class="hud hud-plan" id="hudPlan" aria-hidden="true">
+      <div class="row"><span data-i18n="h.plan"></span><span>1 : 200</span></div>
+      <pre class="pen" id="penv">X   0.00   Z   0.00</pre>
+      <div class="row small"><span data-i18n="h.pen"></span><span id="penpct">0%</span></div>
+      <div class="bar thin"><i id="penbar"></i></div>
+    </div>
+
+    <!-- 2 · level counter -->
+    <div class="hud hud-rise" id="hudRise" aria-hidden="true">
+      <div class="row"><span data-i18n="h.level"></span><span data-i18n="h.height"></span></div>
+      <div class="big"><b id="lvlv">00</b><small>/ 09</small><span class="hv"><b id="hgtv">0.0</b> m</span></div>
+      <div class="floors" id="floors"></div>
+    </div>
+
+    <!-- 3 · cure strip -->
+    <div class="hud hud-cure" id="hudCure" aria-hidden="true">
+      <div class="row"><span data-i18n="h.day"></span><span data-i18n="h.strength"></span></div>
+      <div class="big"><b id="dayv">00</b><small>/ 28</small><span class="hv"><b id="mpav">0.0</b> MPa</span></div>
+      <div class="bar cure"><i id="curebar"></i><u class="m7"><s data-i18n="h.t7"></s></u><u class="m28"><s data-i18n="h.t28"></s></u></div>
+      <div class="tests"><span id="t7" class="tst"></span><span id="t28" class="tst"></span></div>
+    </div>
+
+    <!-- 4 · x-ray legend (clickable) -->
+    <div class="hud hud-xray" id="hudXray">
+      <div class="row"><span data-i18n="h.layers"></span><span data-i18n="h.toggle"></span></div>
+      <div class="chips" id="chips">
+        <button type="button" data-sys="struct" class="on" aria-pressed="true"><i style="--c:#ff6b1f"></i><span data-i18n="h.s.struct"></span></button>
+        <button type="button" data-sys="water" class="on" aria-pressed="true"><i style="--c:#2f9cff"></i><span data-i18n="h.s.water"></span></button>
+        <button type="button" data-sys="fire" class="on" aria-pressed="true"><i style="--c:#ff3b30"></i><span data-i18n="h.s.fire"></span></button>
+        <button type="button" data-sys="power" class="on" aria-pressed="true"><i style="--c:#ffd23f"></i><span data-i18n="h.s.power"></span></button>
+        <button type="button" data-sys="hvac" class="on" aria-pressed="true"><i style="--c:#b4bdc5"></i><span data-i18n="h.s.hvac"></span></button>
+      </div>
+    </div>
+
+    <!-- 5 · the key -->
+    <div class="keyp" id="keyp">
+      <button class="keybtn" id="keyBtn" type="button" aria-label="Turn the key">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="32" r="11"/><circle cx="20" cy="32" r="4"/><path d="M31 32h27M50 32v9M42 32v6"/></svg>
+      </button>
+      <div class="kt"><b data-i18n="j.key.t"></b><span data-i18n="j.key.p"></span></div>
+      <div class="kdone"><span data-i18n="j.key.done"></span><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" href="projects.html" data-i18n="btn.projects"></a></div>
+    </div>
 
     <div class="dots" id="dots" role="tablist"></div>
     <div class="scrollhint" id="shint"><i></i><span data-i18n="j.scroll"></span></div>
@@ -103,57 +146,6 @@
     <div class="reveal d2 ctas"><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" id="ctaWa" href="#" target="_blank" rel="noopener" data-i18n="btn.wa"></a></div>
   </div>
 </section>
-
-<!-- ============ المشهد الثلاثي الأبعاد الحي (محفوظ ولا يُحذف): الكانفاس وشاشات HUD وزر المفتاح وأزرار الأشعة ============
-     الهيرو الآن فيديو مُصوَّر منه (assets/hero/*.mp4). هذا القالب غير معروض؛ أعد محتواه إلى داخل <div class="stage"> مع تفعيل startJourney3D في js/home.js
-     لإعادة المشهد الحي. لتعديل الفيديو: شغّل الموقع القديم من النسخة الاحتياطية (_backup_before_video_hero) أو أعد التفعيل ثم صوّر بأداة _hero_video_tools. -->
-<template id="scene3d-archive">
-    <canvas id="gl" aria-hidden="true"></canvas>
-    <!-- 1 · plan readout -->
-    <div class="hud hud-plan" id="hudPlan" aria-hidden="true">
-      <div class="row"><span data-i18n="h.plan"></span><span>1 : 200</span></div>
-      <pre class="pen" id="penv">X   0.00   Z   0.00</pre>
-      <div class="row small"><span data-i18n="h.pen"></span><span id="penpct">0%</span></div>
-      <div class="bar thin"><i id="penbar"></i></div>
-    </div>
-
-    <!-- 2 · level counter -->
-    <div class="hud hud-rise" id="hudRise" aria-hidden="true">
-      <div class="row"><span data-i18n="h.level"></span><span data-i18n="h.height"></span></div>
-      <div class="big"><b id="lvlv">00</b><small>/ 09</small><span class="hv"><b id="hgtv">0.0</b> m</span></div>
-      <div class="floors" id="floors"></div>
-    </div>
-
-    <!-- 3 · cure strip -->
-    <div class="hud hud-cure" id="hudCure" aria-hidden="true">
-      <div class="row"><span data-i18n="h.day"></span><span data-i18n="h.strength"></span></div>
-      <div class="big"><b id="dayv">00</b><small>/ 28</small><span class="hv"><b id="mpav">0.0</b> MPa</span></div>
-      <div class="bar cure"><i id="curebar"></i><u class="m7"><s data-i18n="h.t7"></s></u><u class="m28"><s data-i18n="h.t28"></s></u></div>
-      <div class="tests"><span id="t7" class="tst"></span><span id="t28" class="tst"></span></div>
-    </div>
-
-    <!-- 4 · x-ray legend (clickable) -->
-    <div class="hud hud-xray" id="hudXray">
-      <div class="row"><span data-i18n="h.layers"></span><span data-i18n="h.toggle"></span></div>
-      <div class="chips" id="chips">
-        <button type="button" data-sys="struct" class="on" aria-pressed="true"><i style="--c:#ff6b1f"></i><span data-i18n="h.s.struct"></span></button>
-        <button type="button" data-sys="water" class="on" aria-pressed="true"><i style="--c:#2f9cff"></i><span data-i18n="h.s.water"></span></button>
-        <button type="button" data-sys="fire" class="on" aria-pressed="true"><i style="--c:#ff3b30"></i><span data-i18n="h.s.fire"></span></button>
-        <button type="button" data-sys="power" class="on" aria-pressed="true"><i style="--c:#ffd23f"></i><span data-i18n="h.s.power"></span></button>
-        <button type="button" data-sys="hvac" class="on" aria-pressed="true"><i style="--c:#b4bdc5"></i><span data-i18n="h.s.hvac"></span></button>
-      </div>
-    </div>
-
-    <!-- 5 · the key -->
-    <div class="keyp" id="keyp">
-      <button class="keybtn" id="keyBtn" type="button" aria-label="Turn the key">
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="32" r="11"/><circle cx="20" cy="32" r="4"/><path d="M31 32h27M50 32v9M42 32v6"/></svg>
-      </button>
-      <div class="kt"><b data-i18n="j.key.t"></b><span data-i18n="j.key.p"></span></div>
-      <div class="kdone"><span data-i18n="j.key.done"></span><a class="btn solid" href="contact.html" data-i18n="btn.quote"></a><a class="btn line" href="projects.html" data-i18n="btn.projects"></a></div>
-    </div>
-
-</template>
 </main>
 
 <div id="ftr"></div>

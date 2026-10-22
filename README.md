@@ -12,9 +12,6 @@ A **construction company website** with a scroll-driven 3D story. Work in progre
 | `lab.html` | Two small instruments: *Cure & crush* (mix, curing method, age, compression test with a strength curve) and a *shake table* (five-storey frame, base isolation on/off, live simulation). Teaching models, not engineering calculations. |
 | `about.html`, `contact.html` | Site-gate odometer sign, timeline, values; a rough-quantities estimator and a quote form that opens WhatsApp. |
 
-
-**Hero (2026-10-21):** the home hero is now a pre-rendered high-resolution video of the scroll story (desktop 2560x1440, phone 1080x1920) played in four scroll steps; a reversed twin video makes scrolling back smooth. The live three.js story (`js/gl/story.js`, `startJourney3D` in `js/home.js`, the archived canvas/HUD template in `index.html`) is kept in the files, switched off, so the video can be re-rendered or the live scene restored.
-
 **Under the hood**
 
 * three.js r172 (vendored in `js/vendor`), no build step, no frameworks, no CDN. Fonts are vendored too (`assets/fonts`, regenerate with `python tools/get_fonts.py`).
@@ -41,3 +38,6 @@ then open <http://localhost:3600/> (or double-click `run-site.bat` on Windows). 
 **Re-skinning**: edit `js/brand.js` (name, WhatsApp number, e-mail, colours, logo paths), the text in `js/i18n/*.js`, the portfolio in `js/data.js` and the maquettes in `js/gl/models.js`.
 
 Design and development: MOHAMMED Web Studio.
+
+## Hero: live 3D again (2026-10-22)
+The hero is the live 3D scene again, a little lighter (lower resolution cap, fewer particles, simpler parts) and released from memory when far away. Devices with 4 cores or fewer, or 2 GB of RAM or less, skip the 3D hero: it becomes one still screen so the first scroll leaves it. Add `?hero=on` or `?hero=off` to force either way. The pre-rendered video version of the hero is kept in `_video_hero_version` (not deployed).

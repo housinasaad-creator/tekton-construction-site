@@ -143,7 +143,7 @@ export class Tower {
   }
 
   _buildLoads(mobile) {
-    const n = mobile ? 260 : 520, a = new Float32Array(n * 3), sd = new Float32Array(n), R = rng(5);
+    const n = mobile ? 200 : 380, a = new Float32Array(n * 3), sd = new Float32Array(n), R = rng(5);
     for (let i = 0; i < n; i++) { const c = this.colXZ[(R() * this.colXZ.length) | 0]; a[i * 3] = c[0] + (R() - .5) * .5; a[i * 3 + 1] = 0; a[i * 3 + 2] = c[1] + (R() - .5) * .5; sd[i] = R(); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(a, 3)); g.setAttribute('aSeed', new THREE.BufferAttribute(sd, 1));
     this.loadMat = new THREE.ShaderMaterial({

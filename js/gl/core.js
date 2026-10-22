@@ -17,7 +17,7 @@ export class Stage {
     this.renderer.setClearColor(0x000000, 0);
     this.shadows = opts.shadows !== false && !this.mobile;
     if (this.shadows) { this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; }
-    this.quality = { dpr: Math.min(window.devicePixelRatio || 1, this.mobile ? 1.5 : 1.75), level: 0 };
+    this.quality = { dpr: Math.min(window.devicePixelRatio || 1, this.mobile ? 1.25 : 1.5), level: 0 };
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(30, 1, 0.5, 900);
     this.scene.add(this.camera);
@@ -55,7 +55,7 @@ export class Stage {
   buildLights(opts) {
     this.key = new THREE.DirectionalLight(0xfff1de, 2.9); this.key.position.set(-40, 62, 34);
     if (this.shadows) {
-      const sz = opts.shadowSize || 2048, e = opts.shadowExtent || 56;
+      const sz = Math.min(opts.shadowSize || 2048, 1536), e = opts.shadowExtent || 56;
       this.key.castShadow = true; this.key.shadow.mapSize.set(sz, sz);
       const c = this.key.shadow.camera; c.left = -e; c.right = e; c.top = e; c.bottom = -e; c.near = 10; c.far = 220;
       this.key.shadow.bias = -0.0004; this.key.shadow.normalBias = 0.05; this.key.shadow.radius = 3;
@@ -68,7 +68,7 @@ export class Stage {
 
   /* fine site dust in a box that follows the camera (gives a sense of travel between stations) */
   buildDust() {
-    const n = this.mobile ? 200 : 420, box = new THREE.Vector3(140, 80, 110);
+    const n = this.mobile ? 140 : 280, box = new THREE.Vector3(140, 80, 110);
     const g = new THREE.BufferGeometry();
     const a = new Float32Array(n * 3), s = new Float32Array(n);
     for (let i = 0; i < n; i++) { a[i * 3] = Math.random() * box.x; a[i * 3 + 1] = Math.random() * box.y; a[i * 3 + 2] = Math.random() * box.z; s[i] = Math.random(); }
@@ -144,6 +144,16 @@ export class Stage {
     requestAnimationFrame(loop);
   }
   stop() { this.running = false; }
+  /* يحرّر كل شيء (الأشكال والخامات والقوام وسياق الرسم) حين يبتعد الزائر عن الهيرو كثيراً */
+  dispose() {
+    this.running = false;
+    this.scene.traverse((o) => {
+      if (o.geometry) o.geometry.dispose();
+      const m = o.material; if (m) (Array.isArray(m) ? m : [m]).forEach((x) => { for (const k in x) { const v = x[k]; if (v && v.isTexture) v.dispose(); } x.dispose(); });
+    });
+    if (this.scene.environment) this.scene.environment.dispose();
+    this.renderer.dispose(); this.renderer.forceContextLoss();
+  }
 }
 
 /* quick 2D texture generator */

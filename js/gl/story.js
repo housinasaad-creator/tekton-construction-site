@@ -56,7 +56,7 @@ export class Story {
     this.stage.add((dt, t) => this._frame(dt, t));
     this._bindInput();
     this._measure();
-    addEventListener('resize', () => this._measure());
+    this._onResize = () => this._measure(); addEventListener('resize', this._onResize);
   }
 
   _build() {
@@ -69,7 +69,7 @@ export class Story {
     this.tower = new Tower(this.mats, { mobile: this.mobile }); sc.add(this.tower.group);
     this.crane = new Crane(this.mats); sc.add(this.crane.group);
     this.props = makeSiteProps(this.mats); sc.add(this.props);
-    this.skyline = makeSkyline(this.mobile ? 44 : 80); sc.add(this.skyline);
+    this.skyline = makeSkyline(this.mobile ? 36 : 60); sc.add(this.skyline);
     // presses on a lab bench
     const bench = new THREE.Mesh(new THREE.BoxGeometry(24, 0.8, 7.6), this.mats.concreteDark); bench.position.set(PRESS.x, 0.4, PRESS.z); bench.receiveShadow = bench.castShadow = true;
     this.pressGroup = new THREE.Group(); this.pressGroup.add(bench);
@@ -85,7 +85,7 @@ export class Story {
 
   /* curing vapour rising from the fresh slabs */
   _makeSteam() {
-    const n = this.mobile ? 60 : 130, a = new Float32Array(n * 3), s = new Float32Array(n);
+    const n = this.mobile ? 48 : 100, a = new Float32Array(n * 3), s = new Float32Array(n);
     for (let i = 0; i < n; i++) { a[i * 3] = (Math.random() - .5) * 26; a[i * 3 + 1] = 0; a[i * 3 + 2] = (Math.random() - .5) * 18; s[i] = Math.random(); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(a, 3)); g.setAttribute('aSeed', new THREE.BufferAttribute(s, 1));
     const m = new THREE.ShaderMaterial({
@@ -119,7 +119,8 @@ export class Story {
 
   _bindInput() {
     const M = this.mouse;
-    addEventListener('pointermove', (e) => { M.tx = (e.clientX / innerWidth - 0.5) * 2; M.ty = (e.clientY / innerHeight - 0.5) * 2; }, { passive: true });
+    this._onMove = (e) => { M.tx = (e.clientX / innerWidth - 0.5) * 2; M.ty = (e.clientY / innerHeight - 0.5) * 2; };
+    addEventListener('pointermove', this._onMove, { passive: true });
   }
 
   _measure() {
@@ -334,6 +335,8 @@ export class Story {
   setSystem(id, on) { this.sys[id] = on; this.tower.setSystem(id, on); }
   start() { this.stage.start(); }
   stop() { this.stage.stop(); this.sfx.stopAll(); }
+  /* تفريغ كامل من الذاكرة (يُستدعى حين نبتعد عن الهيرو بأكثر من شاشتين ونصف) */
+  dispose() { this.stop(); removeEventListener('resize', this._onResize); removeEventListener('pointermove', this._onMove); this.stage.dispose(); if (window.__story === this) window.__story = null; }
   chapterY(i) { return this.secTop + this.span * (CH[i] + (i === 0 ? 0 : 0.004)); }
 }
 export { CH as CHAPTERS };
