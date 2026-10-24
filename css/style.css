@@ -311,3 +311,8 @@ html[lang=ar] .ftr .demo-note { border-left: 0; border-right: 0; }
   .wa-float { width: 44px; height: 44px; right: 12px; bottom: 14px; } .wa-float svg { width: 24px; height: 24px; }
 }
 @media (hover: none) { .cur { display: none; } }
+
+/* الهيرو شاشة واحدة: الفيديو الدائر خلف العنوان الأول فقط (بلا قصة مثبّتة بالتمرير) */
+.journey.one { height: auto; }
+.journey.one .stage { position: relative; height: 100vh; height: 100svh; min-height: 560px; }
+.journey.one .ch[data-ch]:not([data-ch="0"]), .journey.one .dots, .journey.one .scrollhint, .journey.one .hint, .journey.one .skipj { display: none; }
