@@ -26,6 +26,15 @@ export function initHeroVideo({ hero, stick, video, hdr = () => 0, reduced, save
     if (!wanted) return;
     if (vis && !document.hidden) { const p = video.play(); p && p.catch && p.catch(() => { }); } else video.pause();
   }
+  /* حارس: لو بدا الفيديو "يعمل" لكن الزمن متجمّد (يحدث أحياناً حين يزدحم الفكّ مع بناء مشهد ثلاثي الأبعاد) نعيد تشغيله، ثم نعيد تحميل المصدر إن لزم */
+  let wdT = -1, wdN = 0, wd = 0;
+  function watchdog() {
+    if (!wanted || !ready || !vis || document.hidden || video.paused || video.ended) { wdN = 0; wdT = -1; return; }
+    const t = video.currentTime; if (Math.abs(t - wdT) > 0.02) { wdT = t; wdN = 0; return; }
+    wdN++;
+    if (wdN === 2) { video.pause(); const p = video.play(); p && p.catch && p.catch(() => { }); }
+    else if (wdN >= 4) { wdN = 0; const src = video.getAttribute('src'); if (src) { video.src = src; video.load(); video.currentTime = Math.max(0, t - 0.05); const p = video.play(); p && p.catch && p.catch(() => { }); } }
+  }
   const done = () => { if (!wanted || ready) return; ready = true; clearTimeout(tm); onReady && onReady(); };
   const onPlaying = () => { if (!wanted) return; stick.classList.add('on3d'); done(); };
   const onErr = () => { if (!wanted) return; ready = false; stick.classList.remove('on3d'); onFail && onFail(); };
@@ -35,12 +44,12 @@ export function initHeroVideo({ hero, stick, video, hdr = () => 0, reduced, save
     const kind = matchMedia(mobileQuery).matches ? 'phone' : 'desktop';
     video.addEventListener('playing', onPlaying); video.addEventListener('loadeddata', done); video.addEventListener('error', onErr);
     tm = setTimeout(done, 2500);                                             // لا نُعطّل شاشة التحميل في الموقع إن تأخر الفيديو أو مُنع تشغيله
-    video.preload = 'auto'; video.src = `${clips}loop-${kind}.mp4`; video.load(); sync();
+    video.preload = 'auto'; video.src = `${clips}loop-${kind}.mp4`; video.load(); sync(); clearInterval(wd); wd = setInterval(watchdog, 1000);
   }
   function unload() {
     if (!wanted) return; wanted = false; ready = false; clearTimeout(tm);
     video.removeEventListener('playing', onPlaying); video.removeEventListener('loadeddata', done); video.removeEventListener('error', onErr);
-    video.pause(); video.removeAttribute('src'); video.load(); stick.classList.remove('on3d');
+    clearInterval(wd); video.pause(); video.removeAttribute('src'); video.load(); stick.classList.remove('on3d');
   }
 
   /* الظهور: عادةً IntersectionObserver على المنصة؛ في النمط الافتراضي (المنصة ثابتة والمتجر تحتها) نتوقف بمجرد النزول عن القمة */
